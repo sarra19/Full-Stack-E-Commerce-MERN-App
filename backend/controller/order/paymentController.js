@@ -14,7 +14,7 @@ const payementController = async (request, response) => {
             billing_address_collection: 'auto',
             shipping_options: [
                 {
-                    shipping_rate: 'shr_1PnGI0BcKd4NYyOCwfsxWZnU'
+                    shipping_rate: 'shr_1PnIqlBcKd4NYyOCTUmpd3Y2'
                 }
             ],
             customer_email: user.email,
@@ -38,8 +38,8 @@ const payementController = async (request, response) => {
                     quantity: item.quantity
                 };
             }),
-            success_url : `${process.env.FRONTEND_URL}/success`,
-          cancel_url : `${process.env.FRONTEND_URL}/cancel`,
+            success_url : `${process.env.FRONTEND_URL}success`,
+          cancel_url : `${process.env.FRONTEND_URL}cancel`,
         };
 
         const session = await stripe.checkout.sessions.create(params);
