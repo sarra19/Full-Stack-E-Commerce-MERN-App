@@ -1,4 +1,5 @@
 const stripe = require('../../config/stripe')
+const addToCartModel = require('../../models/cartProduct')
 const orderModel = require('../../models/orderProductModel')
 
 const endpointSecret = process.env.STRIPE_ENPOINT_WEBHOOK_SECRET_KEY
@@ -19,6 +20,7 @@ async function getLIneItems(lineItems) {
                 quantity: item.quantity,
                 image: product.images
             }
+            console.log("image:", product.images)
             ProductItems.push(productData)
 
         }
@@ -76,6 +78,9 @@ const webhooks = async (request, response) => {
 
             const order = new orderModel(orderDetails)
             const saveOrder = await order.save()
+            if(saveOrder ?._id){
+                const deleteCartItem = await addToCartModel.deleteMany({ userId : session.metadata.userId })
+            }  
             break;
         // ... handle other event types
         default:
