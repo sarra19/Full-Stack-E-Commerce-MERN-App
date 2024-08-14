@@ -48,7 +48,7 @@ const OrderPage = () => {
                                                         <div>
                                                             <div className='font-medium text-lg text-ellipis line-clamp-1'>{product.name}</div>
                                                             <div className='flex items-center gap-5 mt-1'>
-                                                                <div className='text-lg text-red-500'>{displayINRCurrency(product.price)}</div>
+                                                                <div className='text-lg text-pink-500'>{displayINRCurrency(product.price)}</div>
                                                                 <p>Quantity : {product.quantity}</p>
                                                             </div>
                                                         </div>
