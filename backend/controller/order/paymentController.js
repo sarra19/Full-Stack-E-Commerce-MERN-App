@@ -10,16 +10,60 @@ const payementController = async (request, response) => {
         const params = {
             submit_type: 'pay',
             mode: "payment",
-            payment_method_types: ['card'],
-            billing_address_collection: 'auto',
+            payment_method_types: ["card"],
+            shipping_address_collection: {
+                allowed_countries: ["US", "CA","TN" ,"KE"],
+            },
             shipping_options: [
                 {
-                    shipping_rate: 'shr_1PnIqlBcKd4NYyOCTUmpd3Y2'
-                }
+                    shipping_rate_data: {
+                        type: "fixed_amount",
+                        fixed_amount: {
+                            amount: 0,
+                            currency: "eur",
+                        },
+                        display_name: "Free shipping",
+                        // Delivers between 5-7 business days
+                        delivery_estimate: {
+                            minimum: {
+                                unit: "business_day",
+                                value: 5,
+                            },
+                            maximum: {
+                                unit: "business_day",
+                                value: 7,
+                            },
+                        },
+                    },
+                },
+                {
+                    shipping_rate_data: {
+                        type: "fixed_amount",
+                        fixed_amount: {
+                            amount: 1500,
+                            currency: "eur",
+                        },
+                        display_name: "Next day air",
+                        // Delivers in exactly 1 business day
+                        delivery_estimate: {
+                            minimum: {
+                                unit: "business_day",
+                                value: 1,
+                            },
+                            maximum: {
+                                unit: "business_day",
+                                value: 1,
+                            },
+                        },
+                    },
+                },
             ],
+            phone_number_collection: {
+                enabled: true,
+            },
             customer_email: user.email,
-            metadata:{
-                userId : request.userId            
+            metadata: {
+                userId: request.userId
             },
             line_items: cartItems.map((item, index) => {
                 return {
