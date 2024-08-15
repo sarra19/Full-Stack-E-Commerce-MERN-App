@@ -9,14 +9,7 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-    origin: (origin, callback) => {
-        const allowedOrigins = ['http://localhost:3000', 'https://full-stack-e-commerce-mern-app-gcse.vercel.app'];
-        if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
