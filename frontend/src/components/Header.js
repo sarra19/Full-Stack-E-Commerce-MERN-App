@@ -118,8 +118,10 @@ const Header = () => {
                   }
               
 
+              <div className='flex items-center gap-3'>
+            <Link to={"/about"} className='px-3 py-1  text-pink-600  '>About Us</Link>
+            <Link to={"/contact"} className='px-3 py-1  text-pink-600  '>Contact Us</Link>
 
-                <div>
                   {
                     user?._id  ? (
                       <button onClick={handleLogout} className='px-3 py-1 rounded-full text-white bg-pink-600 hover:bg-pink-700'>Logout</button>
