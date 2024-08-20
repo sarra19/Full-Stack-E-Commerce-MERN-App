@@ -9,7 +9,7 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://full-stack-e-commerce-mern-app-gcse-9w812d6sz.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
