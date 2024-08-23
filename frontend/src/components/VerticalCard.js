@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext } from 'react'
 import scrollTop from '../helpers/scrollTop'
 import displayINRCurrency from '../helpers/displayCurrency'

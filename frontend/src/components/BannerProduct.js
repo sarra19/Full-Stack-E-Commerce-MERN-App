@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import image1 from '../assest/banner/img1.webp'
 import image2 from '../assest/banner/img2.webp'

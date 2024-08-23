@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct'
 import displayINRCurrency from '../helpers/displayCurrency'

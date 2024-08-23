@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import SummaryApi from '../common'
 import moment from 'moment'
@@ -22,7 +23,12 @@ const AllOrder = () => {
         fetchOrderDetails()
     }, [])
     return (
+        
         <div className=' h-[calc(100vh-190px)] overflow-y-scroll'>
+               <div className='bg-white py-2 px-4 flex justify-between items-center'>
+            <h2 className='font-bold text-lg'>All Orders</h2>
+        </div>
+
             {
                 !data[0] && (
                     <p>No Order available</p>

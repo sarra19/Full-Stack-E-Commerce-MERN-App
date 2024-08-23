@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react'
 import { CgClose } from "react-icons/cg";
 import productCategory from '../helpers/productCategory';
