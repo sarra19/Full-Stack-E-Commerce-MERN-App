@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import loginIcons from '../assest/signin.png'
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import imageTobase64 from '../helpers/imageTobase64';
 import SummaryApi from '../common';
 import { toast } from 'react-toastify';
+import { FaEye, FaEyeSlash, FaGoogle, FaFacebookF, FaGithub } from "react-icons/fa";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -93,10 +93,10 @@ const SignUp = () => {
   return (
     <section id='signup'>
       <div className='mx-auto container p-4'>
-        <div className='bg-white p-5 w-full max-w-sm mx-auto'>
+        <div className='bg-white border-2 border-pink-500 p-5 w-full max-w-sm mx-auto rounded-lg shadow-md'>
           <div className='w-20 h-20 mx-auto relative overflow-hidden rounded-full'>
             <div>
-              <img src={data.profilePic || loginIcons} alt='login icons' />
+              <img src={data.profilePic || loginIcons} alt='profile' />
             </div>
             <form>
               <label>
@@ -178,8 +178,23 @@ const SignUp = () => {
               Sign Up
             </button>
           </form>
+          <div className='text-center mt-8'>
+                        <p className='text-gray-600 mb-4 text-sm'>Or Sign up with</p>
+                        <div className='flex justify-center gap-6 mb-6'>
+                            <a href="#!" className='text-blue-500 hover:text-blue-600 transition-transform transform hover:scale-110'>
+                                <FaGoogle size={20} />
+                            </a>
+                            <a href="#!" className='text-blue-700 hover:text-blue-800 transition-transform transform hover:scale-110'>
+                                <FaFacebookF size={20} />
+                            </a>
+                            <a href="#!" className='text-gray-700 hover:text-gray-800 transition-transform transform hover:scale-110'>
+                                <FaGithub size={20} />
+                            </a>
+                        </div>
+                        <p className='my-5'>Already have an account? <Link to={"/login"} className='text-pink-600 hover:text-pink-700 hover:underline'>Login</Link></p>
 
-          <p className='my-5'>Already have an account? <Link to={"/login"} className='text-pink-600 hover:text-pink-700 hover:underline'>Login</Link></p>
+                    </div>
+
         </div>
       </div>
     </section>
