@@ -2,6 +2,7 @@ const userModel = require("./models/userModel");
 
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
 
 module.exports = (passport) => {
     passport.serializeUser(function (user, done) {
@@ -112,4 +113,63 @@ module.exports = (passport) => {
             }
         )
     );
+
+
+    passport.use(
+        new GitHubStrategy(
+            {
+                clientID: process.env.GITHUB_CLIENT_ID,
+                clientSecret: process.env.GITHUB_SECRET_KEY,
+                callbackURL: "http://localhost:8080/auth/github/callback",
+                scope: ['user:email'],
+            },
+            async function (accessToken, refreshToken, profile, cb) {
+                try {
+                    // Check for email in profile
+                    const email = (profile.emails && profile.emails.length > 0) ? profile.emails[0].value : null;
+    
+                    if (!email) {
+                        return cb(new Error("Email is required for GitHub authentication"), null);
+                    }
+    
+                    // Find user by email or ProfileId
+                    let user = await userModel.findOne({ email: email }) || 
+                               await userModel.findOne({ ProfileId: profile.id, provider: 'github' });
+    
+                    if (user) {
+                        // Update existing user
+                        const updatedUser = {
+                            name: profile.displayName,
+                            profilePic: profile._json.avatar_url,
+                            secret: accessToken,
+                        };
+    
+                        user = await userModel.findOneAndUpdate(
+                            { _id: user._id },  // Use user's _id for update
+                            { $set: updatedUser },
+                            { new: true }
+                        );
+                        return cb(null, user);
+                    } else {
+                        // Create new user
+                        const newUser = new userModel({
+                            ProfileId: profile.id,
+                            name: profile.displayName,
+                            email: email,
+                            profilePic: profile._json.avatar_url,
+                            provider: 'github',
+                            secret: accessToken,
+                        });
+    
+                        user = await newUser.save();
+                        return cb(null, user);
+                    }
+                } catch (error) {
+                    console.error("Error in GitHub authentication:", error);
+                    return cb(error);
+                }
+            }
+        )
+    );
+    
 };

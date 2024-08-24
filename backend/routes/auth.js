@@ -81,4 +81,19 @@ Router.get(
   findOrCreateUser
 );
 
+
+// Github authentication route
+Router.get(
+  "/auth/github",
+  passport.authenticate("github", { scope:  ['user:email'] })
+);
+
+// Github authentication callback route
+Router.get(
+  "/auth/github/callback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  findOrCreateUser
+);
+
+
 module.exports = Router;

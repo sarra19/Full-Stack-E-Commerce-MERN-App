@@ -62,6 +62,12 @@ const Login = () => {
 
     };
 
+    const githubAuth = () => {
+        // Redirect to Google OAuth URL
+        window.location.href = `${process.env.REACT_APP_BACKEND_URL}/auth/github`;
+
+    };
+
     return (
         <section id='login'>
             <div className='mx-auto container p-4'>
@@ -117,7 +123,7 @@ const Login = () => {
                             <a onClick={facebookAuth} className='text-blue-700 hover:text-blue-800 transition-transform transform hover:scale-110'>
                                 <FaFacebookF size={20} />
                             </a>
-                            <a href="#!" className='text-gray-700 hover:text-gray-800 transition-transform transform hover:scale-110'>
+                            <a onClick={githubAuth} className='text-gray-700 hover:text-gray-800 transition-transform transform hover:scale-110'>
                                 <FaGithub size={20} />
                             </a>
                         </div>
