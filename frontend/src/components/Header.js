@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { FaInfoCircle, FaEnvelope, FaTrashAlt, FaBars,FaShoppingCart } from 'react-icons/fa'; // Import icons
+import { FaInfoCircle, FaEnvelope, FaTrashAlt, FaBars, FaShoppingCart } from 'react-icons/fa'; // Import icons
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,9 +33,9 @@ const Header = () => {
         },
         body: JSON.stringify({ userId: user._id }), // Send the user ID
       });
-  
+
       const data = await response.json();
-  
+
       if (data.success) {
         toast.success("Your account has been deleted successfully.");
         dispatch(setUserDetails(null));
@@ -48,7 +48,7 @@ const Header = () => {
     }
   };
 
-  
+
   const handleLogout = async () => {
     try {
       const fetchData = await fetch(SummaryApi.logout_user.url, {
@@ -145,8 +145,8 @@ const Header = () => {
           }
 
           <div className='relative'>
-            <button 
-              onClick={() => setDropdownOpen(prev => !prev)} 
+            <button
+              onClick={() => setDropdownOpen(prev => !prev)}
               className='px-3 py-1 text-pink-600 hover:text-pink-700 focus:outline-none flex items-center'
             >
               <FaBars className='mr-2' /> {/* Icon for Menu */}
@@ -159,9 +159,12 @@ const Header = () => {
                 <Link to={"/contact"} className='block px-4 py-2  text-pink-600 hover:bg-gray-100 flex items-center'>
                   <FaEnvelope className='mr-2' /> Contact Us
                 </Link>
-                <button onClick={handleDeleteAccount} className='block w-full text-left px-4 py-2  text-pink-600 hover:bg-gray-100 flex items-center'>
-                  <FaTrashAlt className='mr-2' /> Delete Account
-                </button>
+                {(user?.role === ROLE.ADMIN || user?.role === ROLE.GENERAL) && (
+                  <button onClick={handleDeleteAccount} className='block w-full text-left px-4 py-2 text-pink-600 hover:bg-gray-100 flex items-center'>
+                    <FaTrashAlt className='mr-2' /> Delete Account
+                  </button>
+                )}
+
               </div>
             )}
           </div>

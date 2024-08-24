@@ -89,7 +89,12 @@ const SignUp = () => {
       toast.error("Please check password and confirm password");
     }
   };
-
+	const googleAuth = () => {
+		window.open(
+			`${process.env.REACT_APP_BACKEND_URL}/auth/google`,
+			"_self"
+		);
+	};
   return (
     <section id='signup'>
       <div className='mx-auto container p-4'>
@@ -181,7 +186,7 @@ const SignUp = () => {
           <div className='text-center mt-8'>
                         <p className='text-gray-600 mb-4 text-sm'>Or Sign up with</p>
                         <div className='flex justify-center gap-6 mb-6'>
-                            <a href="#!" className='text-blue-500 hover:text-blue-600 transition-transform transform hover:scale-110'>
+                            <a href="#!" onClick={googleAuth} className='text-blue-500 hover:text-blue-600 transition-transform transform hover:scale-110'>
                                 <FaGoogle size={20} />
                             </a>
                             <a href="#!" className='text-blue-700 hover:text-blue-800 transition-transform transform hover:scale-110'>
