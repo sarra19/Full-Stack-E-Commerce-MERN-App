@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const connectDB = require('./config/db');
 const router = require('./routes');
-const googleAuth = require("./routes/auth");
+const auth = require("./routes/auth");
 const passport = require('passport');
 const session = require("express-session");
 
@@ -34,8 +34,8 @@ app.use(cookieParser());
 app.use("/api", router);
 
 app.use(passport.initialize()); //utilisée pour l'authentification des utilisateurs
-require("./auth/google-auth.js")(passport);
-app.use("/", googleAuth);
+require("./passport.js")(passport);
+app.use("/", auth);
 // Corrected PORT definition
 const PORT = process.env.PORT || 8080;
 

@@ -95,6 +95,12 @@ const SignUp = () => {
 			"_self"
 		);
 	};
+  const facebookAuth = () => {
+		window.open(
+			`${process.env.REACT_APP_BACKEND_URL}/auth/facebook`,
+			"_self"
+		);
+	};
   return (
     <section id='signup'>
       <div className='mx-auto container p-4'>
@@ -186,10 +192,10 @@ const SignUp = () => {
           <div className='text-center mt-8'>
                         <p className='text-gray-600 mb-4 text-sm'>Or Sign up with</p>
                         <div className='flex justify-center gap-6 mb-6'>
-                            <a href="#!" onClick={googleAuth} className='text-blue-500 hover:text-blue-600 transition-transform transform hover:scale-110'>
+                            <a onClick={googleAuth} className='text-blue-500 hover:text-blue-600 transition-transform transform hover:scale-110'>
                                 <FaGoogle size={20} />
                             </a>
-                            <a href="#!" className='text-blue-700 hover:text-blue-800 transition-transform transform hover:scale-110'>
+                            <a onClick={facebookAuth} className='text-blue-700 hover:text-blue-800 transition-transform transform hover:scale-110'>
                                 <FaFacebookF size={20} />
                             </a>
                             <a href="#!" className='text-gray-700 hover:text-gray-800 transition-transform transform hover:scale-110'>

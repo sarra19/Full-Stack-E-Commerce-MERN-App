@@ -56,6 +56,11 @@ const Login = () => {
         window.location.href = `${process.env.REACT_APP_BACKEND_URL}/auth/google`;
 
     };
+    const facebookAuth = () => {
+        // Redirect to Google OAuth URL
+        window.location.href = `${process.env.REACT_APP_BACKEND_URL}/auth/facebook`;
+
+    };
 
     return (
         <section id='login'>
@@ -106,14 +111,14 @@ const Login = () => {
                     <div className='text-center mt-8'>
                         <p className='text-gray-600 mb-4 text-sm'>Or login with</p>
                         <div className='flex justify-center gap-6 mb-6'>
-                            <a href="#!" onClick={googleAuth} className='text-blue-500 hover:text-blue-600 transition-transform transform hover:scale-110'>
-                                <FaGoogle size={30} />
+                            <a onClick={googleAuth} className='text-blue-500 hover:text-blue-600 transition-transform transform hover:scale-110'>
+                                <FaGoogle size={20} />
                             </a>
-                            <a href="#!" className='text-blue-700 hover:text-blue-800 transition-transform transform hover:scale-110'>
-                                <FaFacebookF size={30} />
+                            <a onClick={facebookAuth} className='text-blue-700 hover:text-blue-800 transition-transform transform hover:scale-110'>
+                                <FaFacebookF size={20} />
                             </a>
                             <a href="#!" className='text-gray-700 hover:text-gray-800 transition-transform transform hover:scale-110'>
-                                <FaGithub size={30} />
+                                <FaGithub size={20} />
                             </a>
                         </div>
                         <p className='text-gray-600 text-sm'>
