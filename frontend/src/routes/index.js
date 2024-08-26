@@ -17,12 +17,30 @@ import OrderPage from '../pages/OrderPage'
 import About from '../pages/About'
 import Contact from '../pages/Contact'
 import AllOrder from '../pages/AllOrder'
+import OTPInput from '../pages/OTPInput'
+import Reset from '../pages/Reset'
+import Recovered from '../pages/Recovered'
 
 const router = createBrowserRouter([
     {
         path : "/",
         element : <App/>,
         children : [
+            {
+
+                path : 'test',
+                element : <OTPInput/>
+            },
+            {
+
+                path : 'reset',
+                element : <Reset/>
+            },
+            {
+
+                path : 'recovered',
+                element : <Recovered/>
+            },
             {
                 path : "",
                 element : <Home/>
