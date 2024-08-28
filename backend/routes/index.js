@@ -32,12 +32,15 @@ const deleteProductController = require('../controller/product/deleteProductCont
 
 const sendEmail = require('../sendEmail')
 const userModel = require('../models/userModel')
+const userVerifyController = require('../controller/user/userVerifyController')
 
 
 router.post("/signup",userSignUpController)
 router.post("/signin",userSignInController)
 router.get("/user-details",authToken,userDetailsController)
 router.get("/userLogout",userLogout)
+router.get("/:id/verify/:token/", userVerifyController)
+
 
 //admin panel 
 router.get("/all-user",authToken,allUsers)
@@ -96,25 +99,113 @@ router.post('/password-reset/change', async (req, res) => {
       res.status(500).send({ error: 'Internal Server Error: ' + error.message });
     }
   });
-  
-router.post("/password-reset/send_recovery_email", async (req, res) => {
+  router.post("/password-reset/send_recovery_email", async (req, res) => {
     try {
-        // Validate request body
-        const { OTP, recipient_email } = req.body;
-        if (!OTP || !recipient_email) {
-            return res.status(400).send({ error: "OTP and recipient_email are required" });
-        }
-
-        // Call sendEmail function
-        const response = await sendEmail(req.body);
-
-        // Send success response
-        res.status(200).send({ message: response.message });
-    } catch (error) {
-        // Send error response
-        console.error("Error sending recovery email:", error); // Log error for debugging
-        res.status(500).send({ error: "Internal Server Error: " + error.message });
+      const { OTP, recipient_email } = req.body;
+      if (!OTP || !recipient_email) {
+        return res.status(400).send({ error: "OTP and recipient_email are required" });
+      }
+  
+      const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Recovery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fdf0f6;
+      color: #333;
     }
-});
+    .email-wrapper {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .email-header {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #ff66b2;
+      margin-bottom: 20px;
+    }
+    .email-header img {
+      max-width: 200px;
+      height: auto;
+    }
+    .email-content {
+      text-align: center;
+    }
+    .email-content h1 {
+      font-size: 24px;
+      color: #ff66b2;
+      margin-bottom: 10px;
+    }
+    .email-content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #555555;
+      margin: 0 0 20px;
+    }
+    .otp-box {
+      display: inline-block;
+      background-color: #ff66b2;
+      color: #ffffff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin: 20px 0;
+    }
+    .email-footer {
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid #f8d9e3;
+      font-size: 14px;
+      color: #777777;
+    }
+    .email-footer p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <div class="email-header">
+      <img src="https://via.placeholder.com/200x50?text=Sarradise" alt="Sarradise Logo">
+    </div>
+    <div class="email-content">
+      <h1>Password Recovery</h1>
+      <p>We received a request to reset your password. Please use the following OTP to complete the process. This OTP will be valid for 5 minutes.</p>
+      <div class="otp-box">${OTP}</div>
+    </div>
+    <div class="email-footer">
+      <p>Best Regards,<br>Sarradise</p>
+      <p>7070 Habib Bourguiba Street, Home 100<br>Ras Jebal, Bizerte</p>
+    </div>
+  </div>
+</body>
+</html>
+`;
+  
+      await sendEmail({
+        recipient_email,
+        subject: "Password Recovery",
+        html: htmlContent
+      });
+  
+      res.status(200).send({ message: "Email sent successfully" });
+    } catch (error) {
+      console.error("Error sending recovery email:", error);
+      res.status(500).send({ error: "Internal Server Error: " + error.message });
+    }
+  });
+  
 
 module.exports = router
