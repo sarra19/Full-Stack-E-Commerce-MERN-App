@@ -202,7 +202,9 @@ const ProductDetails = () => {
                 <div className='flex items-center gap-2 text-2xl lg:text-3xl font-medium my-1'>
                   <p className='text-pink-600'>{displayINRCurrency(data.sellingPrice)}</p>
                   <p className='text-slate-400 line-through'>{displayINRCurrency(data.price)}</p>
+
                 </div>
+                <p className='capitalize text-slate-400'> {data.stock} left</p>
 
                 <div className='flex items-center gap-3 my-2'>
                   <button className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-pink-600 font-medium hover:bg-pink-600 hover:text-white' onClick={(e)=>handleBuyProduct(e,data?._id)}>Buy</button>

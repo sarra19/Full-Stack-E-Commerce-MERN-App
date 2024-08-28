@@ -169,7 +169,7 @@ const Cart = () => {
          
                             data.map((product, index) => {
                                 return (
-                                    <div key={product?._id + "Add To Cart Loading"} className='w-full bg-white h-32 my-2 border border-slate-300  rounded grid grid-cols-[128px,1fr]'>
+                                    <div key={product?._id + "Add To Cart Loading"} className='p-2 w-full bg-white h-35 my-2 border border-slate-300  rounded grid grid-cols-[128px,1fr]'>
                                         <div className='w-32 h-32 bg-slate-200'>
                                             <img src={product?.productId?.productImage[0]} className='w-full h-full object-scale-down mix-blend-multiply' />
                                         </div>
@@ -185,6 +185,8 @@ const Cart = () => {
                                                 <p className='text-pink-600 font-medium text-lg'>{displayINRCurrency(product?.productId?.sellingPrice)}</p>
                                                 <p className='text-slate-600 font-semibold text-lg'>{displayINRCurrency(product?.productId?.sellingPrice * product?.quantity)}</p>
                                             </div>
+                                            <p className='text-slate-600 font-semibold text-lg'>{product?.productId.stock - product?.quantity} left</p>
+
                                             <div className='flex items-center gap-3 mt-1'>
                                                 <button className='border border-red-600 text-pink-600 hover:bg-pink-600 hover:text-white w-6 h-6 flex justify-center items-center rounded ' onClick={() => decraseQty(product?._id, product?.quantity)}>-</button>
                                                 <span>{product?.quantity}</span>
@@ -221,7 +223,7 @@ const Cart = () => {
                                             <p>{displayINRCurrency(totalPrice)}</p>
                                         </div>
 
-                                        <button className='bg-blue-600 p-2 text-white w-full mt-2' onClick={handlePayment}>Payment</button>
+                                        <button className='bg-pink-800 p-2 text-white w-full mt-2' onClick={handlePayment}>Payment</button>
 
                                     </div>
                                 )

@@ -48,7 +48,7 @@ router.delete("/delete-user", authToken, deleteUserController);
 //product
 router.post("/upload-product",authToken,UploadProductController)
 router.get("/get-product",getProductController)
-router.post("/update-product",authToken,updateProductController)
+router.put("/update-product",updateProductController)
 router.get("/get-categoryProduct",getCategoryProduct)
 router.post("/category-product",getCategoryWiseProduct)
 router.post("/product-details",getProductDetails)

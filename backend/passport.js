@@ -33,6 +33,8 @@ module.exports = (passport) => {
                             ProfileId: profile.id,
                             name: profile.displayName,
                             profilePic: profile.photos[0].value,
+                            provider: 'github',
+                            role:'GENERAL',
                             secret: accessToken,
                         };
 
@@ -49,6 +51,8 @@ module.exports = (passport) => {
                             name: profile.displayName,
                             email: profile.emails[0].value,
                             profilePic: profile.photos[0].value,
+                            role:'GENERAL',
+                            provider: 'google',
                             secret: accessToken,
                         });
 
@@ -82,8 +86,10 @@ module.exports = (passport) => {
                             ProfileId: profile.id,
                             name: profile.displayName,
                             profilePic: profile.photos[0].value,
+                            role:'GENERAL',
                             provider: 'facebook',
                             secret: accessToken,
+                            
                         };
 
                         user = await userModel.findOneAndUpdate(
@@ -99,6 +105,7 @@ module.exports = (passport) => {
                             name: profile.displayName,
                             email: profile.emails[0].value,
                             profilePic: profile.photos[0].value,
+                            role:'GENERAL',
                             provider: 'facebook',
                             secret: accessToken,
                         });
@@ -141,6 +148,7 @@ module.exports = (passport) => {
                         const updatedUser = {
                             name: profile.displayName,
                             profilePic: profile._json.avatar_url,
+                            role:'GENERAL',
                             secret: accessToken,
                         };
     
@@ -157,6 +165,7 @@ module.exports = (passport) => {
                             name: profile.displayName,
                             email: email,
                             profilePic: profile._json.avatar_url,
+                            role:'GENERAL',
                             provider: 'github',
                             secret: accessToken,
                         });

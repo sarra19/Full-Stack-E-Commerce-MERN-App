@@ -7,12 +7,49 @@ import { toast } from 'react-toastify';
 import Context from '../context';
 import axios from 'axios';
 
+// Validation function
+const validateField = (name, value) => {
+  let error = '';
+  switch (name) {
+    case 'email':
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        error = 'Invalid email format.';
+      }
+      break;
+    case 'password':
+      const passwordError = validatePassword(value);
+      if (passwordError) {
+        error = passwordError;
+      }
+      break;
+    default:
+      break;
+  }
+  return error;
+};
+
+const validatePassword = (password) => {
+  const lengthValid = password.length >= 8;
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  if (!lengthValid) return 'Password must be at least 8 characters long.';
+  if (!hasUpperCase) return 'Password must contain at least one uppercase letter.';
+  if (!hasLowerCase) return 'Password must contain at least one lowercase letter.';
+  if (!hasNumber) return 'Password must contain at least one number.';
+  if (!hasSpecialChar) return 'Password must contain at least one special character.';
+
+  return null;
+};
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: ""
   });
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { fetchUserDetails, fetchUserAddToCart, setEmail, setPage, email, setOTP } = useContext(Context);
 
@@ -25,7 +62,7 @@ const Login = () => {
         OTP,
         recipient_email: data.email,
       })
-      .then(() =>   navigate('/test'))
+      .then(() => navigate('/test'))
       .catch(console.log);
     } else {
       toast.error("Please enter your email");
@@ -34,14 +71,42 @@ const Login = () => {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
+    const error = validateField(name, value);
     setData((prev) => ({
       ...prev,
       [name]: value
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate all fields
+    let formIsValid = true;
+    const newErrors = {};
+
+    // Validate email
+    const emailError = validateField('email', data.email);
+    if (emailError) {
+      newErrors.email = emailError;
+      formIsValid = false;
+    }
+
+    // Validate password
+    const passwordError = validateField('password', data.password);
+    if (passwordError) {
+      newErrors.password = passwordError;
+      formIsValid = false;
+    }
+
+    if (!formIsValid) {
+      setErrors(newErrors);
+      return;
+    }
 
     try {
       const dataResponse = await fetch(SummaryApi.signIn.url, {
@@ -90,7 +155,7 @@ const Login = () => {
 
           <form className='pt-6 flex flex-col gap-2' onSubmit={handleSubmit}>
             <div className='grid'>
-              <label>Email: </label>
+              <label>Email:</label>
               <div className='bg-slate-100 p-2'>
                 <input
                   type='email'
@@ -99,11 +164,12 @@ const Login = () => {
                   value={data.email}
                   onChange={handleOnChange}
                   className='w-full h-full outline-none bg-transparent' />
+                {errors.email && <p className='text-red-500 text-sm'>{errors.email}</p>}
               </div>
             </div>
 
             <div>
-              <label>Password: </label>
+              <label>Password:</label>
               <div className='bg-slate-100 p-2 flex'>
                 <input
                   type={showPassword ? "text" : "password"}
@@ -118,6 +184,7 @@ const Login = () => {
                   </span>
                 </div>
               </div>
+              {errors.password && <p className='text-red-500 text-sm'>{errors.password}</p>}
               <a
                 href="#"
                 onClick={navigateToOtp}

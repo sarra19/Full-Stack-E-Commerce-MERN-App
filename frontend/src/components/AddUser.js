@@ -15,10 +15,47 @@ const AddUser = ({ onClose, callFunc }) => {
         confirmPassword: "",
         profilePic: "",
     });
+    const [errors, setErrors] = useState({});
+
+    const validateField = (name, value) => {
+        let error = '';
+        switch (name) {
+            case 'name':
+                if (value.length < 3) {
+                    error = 'Name must be at least 3 characters long.';
+                } else if (!/^[a-zA-Z\s]+$/.test(value)) {
+                    error = 'Name must contain only letters and spaces.';
+                }
+                break;
+            case 'email':
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                    error = 'Invalid email format.';
+                }
+                break;
+            case 'password':
+                const passwordError = validatePassword(value);
+                if (passwordError) {
+                    error = passwordError;
+                }
+                break;
+            case 'confirmPassword':
+                if (value !== newUser.password) {
+                    error = 'Passwords do not match.';
+                }
+                break;
+            default:
+                break;
+        }
+        setErrors(prev => ({
+            ...prev,
+            [name]: error,
+        }));
+    };
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         setNewUser(prev => ({ ...prev, [name]: value }));
+        validateField(name, value);
     };
 
     const handleUploadPic = async (e) => {
@@ -46,9 +83,9 @@ const AddUser = ({ onClose, callFunc }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        const passwordError = validatePassword(newUser.password);
-        if (passwordError) {
-            toast.error(passwordError);
+        // Check if there are any validation errors
+        if (Object.values(errors).some(error => error)) {
+            toast.error("Please fix the errors in the form.");
             return;
         }
 
@@ -103,6 +140,7 @@ const AddUser = ({ onClose, callFunc }) => {
                             required
                             className='border px-4 py-2 w-full'
                         />
+                        {errors.name && <p className='text-red-500 text-sm'>{errors.name}</p>}
                     </div>
                     <div>
                         <label>Email:</label>
@@ -114,6 +152,7 @@ const AddUser = ({ onClose, callFunc }) => {
                             required
                             className='border px-4 py-2 w-full'
                         />
+                        {errors.email && <p className='text-red-500 text-sm'>{errors.email}</p>}
                     </div>
                     <div>
                         <label>Password:</label>
@@ -131,6 +170,7 @@ const AddUser = ({ onClose, callFunc }) => {
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
                         </div>
+                        {errors.password && <p className='text-red-500 text-sm'>{errors.password}</p>}
                     </div>
                     <div>
                         <label>Confirm Password:</label>
@@ -148,6 +188,7 @@ const AddUser = ({ onClose, callFunc }) => {
                                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
                         </div>
+                        {errors.confirmPassword && <p className='text-red-500 text-sm'>{errors.confirmPassword}</p>}
                     </div>
                    
                     <button
