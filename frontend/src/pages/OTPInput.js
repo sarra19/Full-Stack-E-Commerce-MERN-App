@@ -9,7 +9,7 @@ export default function OTPInput() {
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);
   const navigate = useNavigate();
-
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
     if (!email || otp === undefined) {
       console.error("Email or OTP is undefined!");
@@ -31,7 +31,7 @@ export default function OTPInput() {
   const resendOTP = () => {
     if (disable) return;
     axios
-      .post("http://localhost:8080/api/password-reset/send_recovery_email", {
+      .post(`${backendUrl}/api/password-reset/send_recovery_email`, {
         OTP: otp,
         recipient_email: email,
       })

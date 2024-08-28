@@ -52,13 +52,13 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { fetchUserDetails, fetchUserAddToCart, setEmail, setPage, email, setOTP } = useContext(Context);
-
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const navigateToOtp = () => {
     if (data.email) {
       const OTP = Math.floor(Math.random() * 9000 + 1000);
       setOTP(OTP);
       setEmail(data.email);
-      axios.post("http://localhost:8080/api/password-reset/send_recovery_email", {
+      axios.post(`${backendUrl}/api/password-reset/send_recovery_email`, {
         OTP,
         recipient_email: data.email,
       })

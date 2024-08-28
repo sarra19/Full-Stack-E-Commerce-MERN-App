@@ -9,7 +9,7 @@ export default function Reset() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -19,7 +19,7 @@ export default function Reset() {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/password-reset/change", { email, password });
+      const response = await axios.post( `${backendUrl}api/password-reset/change`, { email, password });
       // Handle success (e.g., navigate to a confirmation page or show a success message)
       navigate('/recovered');
     } catch (error) {
