@@ -1,3 +1,4 @@
+  //eslint-disable
 import './App.css';
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
@@ -17,7 +18,6 @@ function App() {
   const [page, setPage] = useState('');
   const [email, setEmail] = useState('');
   const [otp, setOTP] = useState('');
-
   // Function to fetch user details
   const fetchUserDetails = async () => {
     try {

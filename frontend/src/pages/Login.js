@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+  //eslint-disable
+  import React, { useContext, useState } from 'react';
 import loginIcons from '../assest/signin.png';
 import { FaEye, FaEyeSlash, FaGoogle, FaFacebookF, FaGithub } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
