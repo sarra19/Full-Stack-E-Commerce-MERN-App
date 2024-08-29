@@ -7,6 +7,7 @@ const router = require('./routes');
 const auth = require("./routes/auth");
 const passport = require('passport');
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 
 const app = express();
 
@@ -16,17 +17,25 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
+
+// Session management with MongoDB
 app.use(
-    session({
-      secret: "secret",// Chaîne aléatoire utilisée pour signer le cookie de session
+  session({
+      secret:"secret",
       resave: false,
       saveUninitialized: false,
+      store: MongoStore.create({
+          mongoUrl: process.env.MONGODB_URI,
+          collectionName: 'sessions',
+      }),
       cookie: {
-        sameSite: "none",//"none" pour les connexions cross-origin
-        secure: true //doit être envoyé uniquement sur HTTPS
+          sameSite: "none",
+          secure: true,
+          maxAge: 1000 * 60 * 60 * 24 // 1 day
       }
-    })
-  );
+  })
+);
+
 app.use(express.json());
 app.use(cookieParser());
 
