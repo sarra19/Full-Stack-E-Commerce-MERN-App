@@ -186,7 +186,6 @@ const Login = () => {
               </div>
               {errors.password && <p className='text-red-500 text-sm'>{errors.password}</p>}
               <a
-                href="#"
                 onClick={navigateToOtp}
                 className='block w-fit ml-auto hover:underline hover:text-pink-600'>
                 Forgot password?

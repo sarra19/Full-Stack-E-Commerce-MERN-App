@@ -1,5 +1,5 @@
 import './App.css';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
@@ -55,7 +55,7 @@ function App() {
   useEffect(() => {
     fetchUserDetails();
     fetchUserAddToCart();
-  }, []);
+  }, [fetchUserDetails]);
 
  
   return (
