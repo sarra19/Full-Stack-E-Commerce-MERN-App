@@ -19,7 +19,7 @@ export default function Reset() {
     }
 
     try {
-      const response = await axios.post( `${backendUrl}api/password-reset/change`, { email, password });
+      await axios.post( `${backendUrl}api/password-reset/change`, { email, password });
       // Handle success (e.g., navigate to a confirmation page or show a success message)
       navigate('/recovered');
     } catch (error) {

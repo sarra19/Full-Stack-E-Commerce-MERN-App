@@ -51,7 +51,7 @@ const Login = () => {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const { fetchUserDetails, fetchUserAddToCart, setEmail, setPage, email, setOTP } = useContext(Context);
+  const { fetchUserDetails, fetchUserAddToCart, setEmail, setOTP } = useContext(Context);
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const navigateToOtp = () => {
     if (data.email) {

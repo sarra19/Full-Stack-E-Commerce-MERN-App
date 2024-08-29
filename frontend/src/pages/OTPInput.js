@@ -4,7 +4,7 @@ import Context from '../context';
 import { useNavigate } from "react-router-dom";
 
 export default function OTPInput() {
-  const { email, otp, setPage } = useContext(Context);
+  const { email, otp } = useContext(Context);
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);

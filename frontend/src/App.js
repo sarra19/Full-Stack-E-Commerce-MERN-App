@@ -1,18 +1,14 @@
 import './App.css';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState, createContext } from 'react';
+import { useEffect, useState } from 'react';
 import SummaryApi from './common';
 import Context from './context';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from './store/userSlice';
-import Login from './pages/Login';
-import OTPInput from './pages/OTPInput';
-import Recovered from "./pages/Recovered";
-import Reset from "./pages/Reset";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +17,6 @@ function App() {
   const [page, setPage] = useState('');
   const [email, setEmail] = useState('');
   const [otp, setOTP] = useState('');
-  const navigate = useNavigate();
 
   // Function to fetch user details
   const fetchUserDetails = async () => {
