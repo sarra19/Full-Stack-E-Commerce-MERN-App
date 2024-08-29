@@ -20,7 +20,7 @@ module.exports = (passport) => {
             {
                 clientID: process.env.GOOGLE_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-                callbackURL: "http://localhost:8080/auth/google/callback",
+                callbackURL: `${process.env.REACT_APP_BACKEND_URL}auth/google/callback`,
             },
             async function (accessToken, refreshToken, profile, cb) {
                 try {
@@ -72,7 +72,7 @@ module.exports = (passport) => {
             {
                 clientID: process.env.FACEBOOK_CLIENT_ID,
                 clientSecret: process.env.FACEBOOK_SECRET_KEY,
-                callbackURL: "http://localhost:8080/auth/facebook/callback",
+                callbackURL: `${process.env.REACT_APP_BACKEND_URL}auth/facebook/callback`,
                 profileFields: ["id", "displayName", "photos", "email"]
             },
             async function (accessToken, refreshToken, profile, cb) {
@@ -127,7 +127,7 @@ module.exports = (passport) => {
             {
                 clientID: process.env.GITHUB_CLIENT_ID,
                 clientSecret: process.env.GITHUB_SECRET_KEY,
-                callbackURL: "http://localhost:8080/auth/github/callback",
+                callbackURL: `${process.env.REACT_APP_BACKEND_URL}auth/github/callback`,
                 scope: ['user:email'],
             },
             async function (accessToken, refreshToken, profile, cb) {

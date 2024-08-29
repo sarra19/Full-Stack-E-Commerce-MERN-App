@@ -44,7 +44,7 @@ async function userSignUpController(req, res) {
       const newUser = new userModel(payload);
       const saveUser = await newUser.save();
   
-      const verificationUrl = `http://localhost:8080/api/${saveUser._id}/verify/${token}`;
+      const verificationUrl = `${process.env.REACT_APP_BACKEND_URL}api/${saveUser._id}/verify/${token}`;
   
       await sendEmail({
         recipient_email: email,
